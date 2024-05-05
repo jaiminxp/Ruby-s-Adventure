@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     int direction = 1;
 
     Animator animator;
+    bool broken = true;
 
     void Start()
     {
@@ -23,6 +24,9 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        if (!broken)
+            return;
+
         timer -= Time.deltaTime;
 
         if (timer < 0)
@@ -34,6 +38,9 @@ public class EnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!broken)
+            return;
+
         Vector2 position = rigidbody2D.position;
 
         if (vertical)
@@ -62,5 +69,11 @@ public class EnemyController : MonoBehaviour
         {
             player.ChangeHealth(-1);
         }
+    }
+
+    public void Fix()
+    {
+        broken = false;
+        rigidbody2D.simulated = false;
     }
 }
